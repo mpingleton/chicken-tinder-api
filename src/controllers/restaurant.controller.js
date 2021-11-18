@@ -15,6 +15,22 @@ const getAllRestaurants = async (req, res) => {
   res.send(200, responseData);
 };
 
+const getRestaurantsInLocation = async (req, res) => {
+  const restaurants = await restaurantService.getRestaurantsInLocation(req.query.location);
+
+  const responseData = [];
+  restaurants.map((restaurant) => {
+    responseData.push({
+      id: restaurant.id,
+      name: restaurant.name,
+      location: restaurant.location,
+    });
+  });
+
+  res.send(200, responseData);
+};
+
 module.exports = {
   getAllRestaurants,
+  getRestaurantsInLocation,
 };

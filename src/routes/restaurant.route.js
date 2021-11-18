@@ -11,4 +11,10 @@ router.get(
   restaurantController.getAllRestaurants,
 );
 
+router.get(
+  '/in/location/',
+  tokenMiddleware.verifyAccessToken,
+  restaurantController.getRestaurantsInLocation,
+);
+
 module.exports = router;
