@@ -14,7 +14,17 @@ const getRestaurantsInLocation = async (location) => {
   return restaurants;
 };
 
+const getRestaurantPhotos = async (restaurantId) => {
+  const restaurantPhotos = await models.RestaurantPhoto.findAll({
+    where: {
+      restaurant_id: restaurantId,
+    },
+  });
+  return restaurantPhotos;
+};
+
 module.exports = {
   getAllRestaurants,
   getRestaurantsInLocation,
+  getRestaurantPhotos,
 };
