@@ -1,5 +1,13 @@
 const { models } = require('../database');
 
+const createUser = async (username, passphrase, isLocked) => {
+  await models.User.create({
+    username: username,
+    passphrase: passphrase,
+    is_locked: isLocked,
+  });
+};
+
 const getUserById = async (userId) => {
   const user = await models.User.findOne({
     where: {
@@ -20,6 +28,7 @@ const getUserByUsername = async (username) => {
 };
 
 module.exports = {
+  createUser,
   getUserById,
   getUserByUsername,
 };

@@ -5,6 +5,11 @@ const tokenMiddleware = require('../middleware/token.middleware');
 
 const router = express.Router();
 
+router.post(
+  '/register',
+  userController.register,
+);
+
 router.get(
   '/me',
   tokenMiddleware.verifyAccessToken,

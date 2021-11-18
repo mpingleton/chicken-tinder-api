@@ -1,5 +1,16 @@
 const userService = require('../services/user.service');
 
+const register = async (req, res) => {
+  const existingUser = await userService.getUserByUsername(req.body.username);
+  if (existingUser != null) {
+    res.send(400);
+    return;
+  }
+
+  await userService.createUser(req.body.username, req.body.passphrase, false);
+  res.send(201);
+};
+
 const getMe = async (req, res) => {
   const user = await userService.getUserById(req.user.userId);
 
@@ -12,5 +23,6 @@ const getMe = async (req, res) => {
 };
 
 module.exports = {
+  register,
   getMe,
 };
