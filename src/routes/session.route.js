@@ -17,4 +17,10 @@ router.get(
   sessionController.getCurrentActiveSessionForMe,
 );
 
+router.put(
+  '/',
+  tokenMiddleware.verifyAccessToken,
+  sessionController.createSession,
+);
+
 module.exports = router;

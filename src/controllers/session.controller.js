@@ -32,7 +32,44 @@ const getCurrentActiveSessionForMe = async (req, res) => {
   }
 };
 
+const createSession = async (req, res) => {
+
+  // Make sure there isn't another active session for this user.
+  const activeSessions = await sessionService.getActiveSessionsForUser(req.user.userId);
+  if(activeSessions.length > 0) {
+    res.send(403, "An active session already exists for this user.");
+    return;
+  }
+
+  while (1) {
+    // Generate a random string of characters to use as a join code.
+    const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    let joinCode = '';
+    for (let i = 0; i < 10; i += 1) {
+      const randomNumber = Math.floor(Math.random() * charSet.length);
+      joinCode += charSet[randomNumber];
+    }
+
+    // Make sure there isn't another session with this join code.
+    const session = await sessionService.getSessionByJoinCode(joinCode);
+    if (session === null) {
+      // Insert new session into database.
+      await sessionService.createSession(
+        1,
+        req.user.userId,
+        undefined,
+        joinCode,
+      );
+
+      res.send(201, { joinCode });
+      break;
+    }
+  }
+
+};
+
 module.exports = {
   getAllSessions,
   getCurrentActiveSessionForMe,
+  createSession,
 };
