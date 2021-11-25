@@ -19,7 +19,32 @@ const getActiveSessionsForUser = async (userId) => {
   return sessions;
 };
 
+const getSessionByJoinCode = async (joinCode) => {
+  const session = await models.Session.findOne({
+    where: {
+      join_code: joinCode,
+    },
+  });
+  return session;
+};
+
+const createSession = async (
+  status,
+  userIdA,
+  userIdB,
+  joinCode,
+) => {
+  await models.Session.create({
+    status: status,
+    user_a_id: userIdA,
+    user_b_id: userIdB,
+    join_code: joinCode,
+  });
+};
+
 module.exports = {
   getAllSessions,
   getActiveSessionsForUser,
+  getSessionByJoinCode,
+  createSession,
 };
