@@ -42,9 +42,23 @@ const createSession = async (
   });
 };
 
+const joinSession = async (
+  sessionId,
+  userIdB,
+) => {
+  await models.Session.update({
+    user_b_id: userIdB,
+  }, {
+    where: {
+      id: sessionId,
+    },
+  });
+};
+
 module.exports = {
   getAllSessions,
   getActiveSessionsForUser,
   getSessionByJoinCode,
   createSession,
+  joinSession,
 };

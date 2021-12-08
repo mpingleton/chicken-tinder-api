@@ -23,4 +23,10 @@ router.put(
   sessionController.createSession,
 );
 
+router.post(
+  '/join/:joinCode',
+  tokenMiddleware.verifyAccessToken,
+  sessionController.joinSession,
+);
+
 module.exports = router;

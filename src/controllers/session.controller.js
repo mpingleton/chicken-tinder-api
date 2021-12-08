@@ -68,8 +68,34 @@ const createSession = async (req, res) => {
 
 };
 
+const joinSession = async (req, res) => {
+
+  // Make sure there isn't another active session for this user.
+  const activeSessions = await sessionService.getActiveSessionsForUser(req.user.userId);
+  if(activeSessions.length > 0) {
+    res.send(403, "An active session already exists for this user.");
+    return;
+  }
+
+  // Find the session matching the provided join code.  Make sure we are able to join.
+  const session = await sessionService.getSessionByJoinCode(req.params.joinCode);
+  console.log(session);
+  if (session === null) {
+    res.send(404, "No existing session with this join code was found.");
+    return;
+  } else if (session.user_b_id != null) {
+    res.send(403, "This session has already been joined by another user.");
+    return;
+  }
+
+  // Make the join happen.
+  await sessionService.joinSession(session.id, req.user.userId);
+  res.send(200);
+};
+
 module.exports = {
   getAllSessions,
   getCurrentActiveSessionForMe,
   createSession,
+  joinSession,
 };
