@@ -33,12 +33,14 @@ const createSession = async (
   userIdA,
   userIdB,
   joinCode,
+  location,
 ) => {
   await models.Session.create({
     status: status,
     user_a_id: userIdA,
     user_b_id: userIdB,
     join_code: joinCode,
+    location: location,
   });
 };
 

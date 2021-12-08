@@ -32,8 +32,12 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
     },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   }, {
-    tableName: 'sessions'
+    tableName: 'sessions',
   });
 
   return Session;

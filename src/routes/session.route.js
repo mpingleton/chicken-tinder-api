@@ -24,7 +24,7 @@ router.put(
 );
 
 router.post(
-  '/join/:joinCode',
+  '/join',
   tokenMiddleware.verifyAccessToken,
   sessionController.joinSession,
 );

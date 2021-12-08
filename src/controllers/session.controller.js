@@ -9,6 +9,7 @@ const getAllSessions = async (req, res) => {
     joinCode: session.join_code,
     userIdA: session.user_a_id,
     userIdB: session.user_b_id,
+    location: session.location,
   }));
 
   res.send(200, responseData);
@@ -25,6 +26,7 @@ const getCurrentActiveSessionForMe = async (req, res) => {
       joinCode: sessions[0].join_code,
       userIdA: sessions[0].user_a_id,
       userIdB: sessions[0].user_b_id,
+      location: sessions[0].location,
     };
     res.send(200, responseData);
   } else {
@@ -59,6 +61,7 @@ const createSession = async (req, res) => {
         req.user.userId,
         undefined,
         joinCode,
+        req.body.location,
       );
 
       res.send(201, { joinCode });
@@ -78,7 +81,7 @@ const joinSession = async (req, res) => {
   }
 
   // Find the session matching the provided join code.  Make sure we are able to join.
-  const session = await sessionService.getSessionByJoinCode(req.params.joinCode);
+  const session = await sessionService.getSessionByJoinCode(req.body.joinCode);
   console.log(session);
   if (session === null) {
     res.send(404, "No existing session with this join code was found.");
