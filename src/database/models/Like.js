@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Swipe = sequelize.define('Swipe', {
+  const Like = sequelize.define('Like', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -31,13 +31,9 @@ module.exports = (sequelize) => {
         key: 'id',
       },
     },
-    swipe_right: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-    },
   }, {
-    tableName: 'swipes'
+    tableName: 'likes'
   });
 
-  return Swipe;
+  return Like;
 };

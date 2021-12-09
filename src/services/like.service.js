@@ -1,10 +1,10 @@
 const { models } = require('../database');
 
-const getSwipesBySessionAndRestaurant = async (
+const getLikesBySessionAndRestaurant = async (
   sessionId,
   restaurantId,
 ) => {
-  const swipes = await models.Swipe.findAll({
+  const swipes = await models.Like.findAll({
     where: {
       session_id: sessionId,
       restaurant_id: restaurantId,
@@ -14,11 +14,11 @@ const getSwipesBySessionAndRestaurant = async (
   return swipes;
 };
 
-const clearSwipesBySessionAndRestaurant = async (
+const clearLikesBySessionAndRestaurant = async (
   sessionId,
   restaurantId,
 ) => {
-  await models.Swipe.destroy({
+  await models.Like.destroy({
     where: {
       session_id: sessionId,
       restaurant_id: restaurantId,
@@ -26,22 +26,20 @@ const clearSwipesBySessionAndRestaurant = async (
   });
 };
 
-const enterSwipe = async (
+const enterLike = async (
   sessionId,
   userId,
   restaurantId,
-  swipeRight,
 ) => {
-  await models.Swipe.create({
+  await models.Like.create({
     session_id: sessionId,
     user_id: userId,
     restaurant_id: restaurantId,
-    swipe_right: swipeRight,
   });
 };
 
 module.exports = {
-  getSwipesBySessionAndRestaurant,
-  clearSwipesBySessionAndRestaurant,
-  enterSwipe,
+  getLikesBySessionAndRestaurant,
+  clearLikesBySessionAndRestaurant,
+  enterLike,
 };

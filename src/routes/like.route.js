@@ -1,6 +1,6 @@
 const express = require('express');
 
-const swipeController = require('../controllers/swipe.controller');
+const likeController = require('../controllers/like.controller');
 const tokenMiddleware = require('../middleware/token.middleware');
 
 const router = express.Router();
@@ -8,7 +8,7 @@ const router = express.Router();
 router.put(
   '/',
   tokenMiddleware.verifyAccessToken,
-  swipeController.enterSwipe,
+  likeController.enterLike,
 );
 
 module.exports = router;

@@ -5,7 +5,7 @@ const Token = require('./models/Token');
 const Restaurant = require('./models/Restaurant');
 const RestaurantPhoto = require('./models/RestaurantPhoto');
 const Session = require('./models/Session');
-const Swipe = require('./models/Swipe');
+const Like = require('./models/Like');
 const Match = require('./models/Match');
 
 const sequelize = new Sequelize(process.env.DATABASE_URL);
@@ -19,7 +19,7 @@ const initDatabase = async () => {
   models.Restaurant = Restaurant(sequelize);
   models.RestaurantPhoto = RestaurantPhoto(sequelize);
   models.Session = Session(sequelize);
-  models.Swipe = Swipe(sequelize);
+  models.Like = Like(sequelize);
   models.Match = Match(sequelize);
 };
 

@@ -1,8 +1,8 @@
-const swipeService = require('../services/swipe.service');
+const likeService = require('../services/like.service');
 const sessionService = require('../services/session.service');
 const matchService = require('../services/match.service');
 
-const enterSwipe = async (req, res) => {
+const enterLike = async (req, res) => {
   const sessions = await sessionService.getActiveSessionsForUser(req.user.userId);
   if (sessions.length === 0) {
     res.send(403);
@@ -13,17 +13,17 @@ const enterSwipe = async (req, res) => {
   }
 
   // Get the already existing swipes for this restaurant.
-  const swipes = await swipeService.getSwipesBySessionAndRestaurant(sessions[0].id, req.body.restaurantId);
-  if (swipes.length === 0) {
-    // If not, create a swipe.
-    await swipeService.enterSwipe(
+  const likes = await likeService.getLikesBySessionAndRestaurant(sessions[0].id, req.body.restaurantId);
+  if (likes.length === 0) {
+    // If not, create a like.
+    await likeService.enterLike(
       sessions[0].id,
       req.user.userId,
       req.body.restaurantId,
       req.body.swipeRight,
     );
-  } else if (swipes[0].swipe_right) {
-    await swipeService.clearSwipesBySessionAndRestaurant(sessions[0].id, req.body.restaurantId)
+  } else {
+    await likeService.clearLikesBySessionAndRestaurant(sessions[0].id, req.body.restaurantId)
     await matchService.enterMatch(sessions[0].id, req.body.restaurantId);
   }
 
@@ -31,5 +31,5 @@ const enterSwipe = async (req, res) => {
 };
 
 module.exports = {
-  enterSwipe,
+  enterLike,
 };
