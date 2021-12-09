@@ -20,7 +20,6 @@ const enterLike = async (req, res) => {
       sessions[0].id,
       req.user.userId,
       req.body.restaurantId,
-      req.body.swipeRight,
     );
   } else {
     await likeService.clearLikesBySessionAndRestaurant(sessions[0].id, req.body.restaurantId)
