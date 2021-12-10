@@ -82,7 +82,7 @@ const joinSession = async (req, res) => {
 
   // Find the session matching the provided join code.  Make sure we are able to join.
   const session = await sessionService.getSessionByJoinCode(req.body.joinCode);
-  console.log(session);
+
   if (session === null) {
     res.send(404, "No existing session with this join code was found.");
     return;
